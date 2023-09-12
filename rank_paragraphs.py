@@ -8,7 +8,7 @@ def tokenize_paragraphs(paragraphs):
     paragraphs = [current.translate(translator).lower()
                   for current
                   in paragraphs]
-    paragraphs = [current.split(" ") for current in paragraphs]
+    paragraphs = [current.split(' ') for current in paragraphs]
     return paragraphs
 
 
