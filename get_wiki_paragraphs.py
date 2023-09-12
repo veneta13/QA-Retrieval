@@ -8,7 +8,7 @@ def get_paragraphs(link):
 
     if response is not None:
         html = bs4.BeautifulSoup(response.text, 'html.parser')
-        raw_paragraphs = html.select("p")
+        raw_paragraphs = html.select('p')
         raw_paragraphs = [current.text for current in raw_paragraphs if len(current.text) > 1]
 
         for current in raw_paragraphs:
