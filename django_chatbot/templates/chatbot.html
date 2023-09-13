@@ -1,132 +1,83 @@
 {% extends 'base.html' %}
 
-{% block styles %}
-<style>
-    body, html {
-        height: 100%;
-    }
-
-    .messages-box {
-        flex: 1;
-        overflow-y: auto;
-    }
-
-    .messages-list {
-        padding-left: 0;
-    }
-
-    .message {
-        margin-bottom: 15px;
-        list-style: none;
-    }
-
-    .message-text {
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .sent {
-        background-color: #dcf8c6;
-        align-self: flex-end;
-    }
-
-    .received {
-        background-color: #f1f0f0;
-        align-self: flex-start;
-    }
-
-    .message-form {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 10px;
-        background-color: #f8f9fa;
-    }
-
-    .message-input {
-        flex: 1;
-        border-radius: 0;
-        border-right: none;
-    }
-
-    .btn-send {
-        border-radius: 0;
-    }
-
-    .chat-container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-</style>
-{% endblock %}
-
-
 {% block content %}
-<div class="chat-container">
-    <div class="card flex-grow-1">
-        <div class="card-header bg-primary text-white">Question-Answering Bot</div>
-        <div class="card-body messages-box">
+<div>
 
-            <ul class="list-unstyled messages-list">
-
-                <!-- <li class="message received">
-                  <div class="message-text">
-                    <div class="message-sender">
-                      <b>AI Chatbot</b>
-                    </div>
-                    <div class="message-content">
-                      Hi {{user.username}}, I am your AI Chatbot, you can ask me anything.
-                    </div>
-                  </div>
-                </li> -->
-
-                {% for chat in chats %}
-                {% if chat.user == request.user %}
-
-                <li class="message sent">
-                    <div class="message-text">
-                        <div class="message-sender">
-                            <b>You</b>
-                        </div>
-                        <div class="message-content">
-                            {{chat.message}}
-                        </div>
-                    </div>
-                </li>
-
-                <li class="message received">
-                    <div class="message-text">
-                        <div class="message-sender">
-                            <b>AI Chatbot</b>
-                        </div>
-                        <div class="message-content">
-                            {{chat.response}}
-                        </div>
-                    </div>
-                </li>
-
-                {% endif %}
-                {% endfor %}
-
-            </ul>
-
+    <div class="navbar bg-base-100 sticky top-0 z-50">
+        <div class="navbar-start"></div>
+        <div class="navbar-center">
+            <h1 class="text-4xl text-secondary" style="font-family: 'Coiny', cursive;">Question-Answering Bot</h1>
         </div>
-        <br><br>
-        <br><br>
-        <br><br>
+        <div class="navbar-end"></div>
     </div>
-    <form class="message-form">
-        {%csrf_token%}
-        <div class="input-group">
-            <input class="form-control message-input" placeholder="Type your message..." type="text">
-            <div class="input-group-append">
-                <button class="btn btn-primary btn-send" type="submit">Send</button>
+
+
+    <div class="grid md:grid-cols-3">
+        <div class="col-span-1"></div>
+        <div class="col-span-1">
+            <div class="prose">
+
+            </div>
+            <div>
+                <div class="card-body messages-box">
+                    <ul class="list-unstyled messages-list">
+
+                        {% for chat in chats %}
+                        {% if chat.user == request.user %}
+
+                        <li>
+                            <div class="toast toast-end">
+                                <div>
+                                    <b>You</b>
+                                </div>
+                                <div>
+                                    {{chat.message}}
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="toast toast-start">
+                                <div>
+                                    <b>BOT</b>
+                                </div>
+                                <div>
+                                    {{chat.response}}
+                                </div>
+                            </div>
+                        </li>
+
+                        {% endif %}
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
             </div>
         </div>
-    </form>
+        <br><br>
+        <br><br>
+        <br><br>
+
+        <form class="message-form bg-base-100 form-control w-full max-w-xs">
+            {%csrf_token%}
+            <div class="footer toast toast-center form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text">What is your question?</span>
+                </label>
+                <input class="message-input input input-bordered w-full max-w-xs" placeholder="Type here..."
+                       type="text">
+                <div class="input-group-append">
+                    <button class="toast-center btn btn-secondary btn-active btn-md"
+                            type="submit">Send
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-span-1"></div>
+</div>
 </div>
 
 <script>
@@ -143,13 +94,12 @@
         }
 
         const messageItem = document.createElement('li');
-        messageItem.classList.add('message', 'sent');
         messageItem.innerHTML = `
-        <div class="message-text">
-            <div class="message-sender">
+        <div class="chat chat-end">
+            <div class="chat-header">
                 <b>You</b>
             </div>
-            <div class="message-content">
+            <div class="chat-bubble chat-bubble-primary">
                 ${message}
             </div>
         </div>`;
@@ -169,13 +119,12 @@
             .then(data => {
                 const response = data.response;
                 const messageItem = document.createElement('li');
-                messageItem.classList.add('message', 'received');
                 messageItem.innerHTML = `
-        <div class="message-text">
-            <div class="message-sender">
-              <b>AI Chatbot</b>
+        <div class="chat chat-start">
+            <div class="chat-header">
+              <b>BOT</b>
             </div>
-            <div class="message-content">
+            <div class="chat-bubble chat-bubble-accent">
                 ${response}
             </div>
         </div>
