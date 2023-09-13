@@ -13,5 +13,7 @@ def get_answer(context, question):
     start_position = np.argmax(outputs.start_logits[0])
     end_position = np.argmax(outputs.end_logits[0])
     answer = inputs["input_ids"][0, start_position: end_position + 1]
-
-    return tokenizer.decode(answer)
+    answer = tokenizer.decode(answer)
+    if '[SEP]' in answer:
+        answer = answer[:answer.index("SEP") - 1]
+    return answer

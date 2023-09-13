@@ -24,4 +24,4 @@ def get_top_paragraph(paragraphs, query):
 
     bm25 = BM25Okapi(tokenized_paragraphs)
 
-    return bm25.get_top_n(tokenized_query, paragraphs, n=1)
+    return bm25.get_top_n(tokenized_query, paragraphs, n=1)[0]
