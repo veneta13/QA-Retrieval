@@ -1,4 +1,5 @@
 from langchain.schema import (
+    AIMessage,
     HumanMessage,
     SystemMessage
 )
@@ -10,7 +11,7 @@ def format_answer(question, answer):
     message = f'Question:{question} Answer: {answer}'
 
     messages = [
-        SystemMessage(content="You format answers to questions"),
+        SystemMessage(content="Simply make the given answer into a single sentence"),
         HumanMessage(content=message)
     ]
 
