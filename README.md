@@ -1,6 +1,6 @@
 # Question-Answering Bot
 
-**Question-answering bot build with DistilBERT and Django.**
+**Question-answering bot built with DistilBERT and Django.**
 
 ![UI](img/bot_ui.JPG)
 
