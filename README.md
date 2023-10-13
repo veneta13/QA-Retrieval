@@ -1,6 +1,6 @@
 # Question-Answering Bot
 
-**Question-answering bot built with DistilBERT and Django.**
+**Retrieval Augmented Generation (RAG)-based question-answering bot built with DistilBERT and Django.**
 
 ![UI](img/bot_ui.JPG)
 
